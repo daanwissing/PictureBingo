@@ -1,0 +1,47 @@
+@page "/bingo"
+
+<h1>Bingoooo!</h1> 
+<div id=numbers>
+    Available numbers:
+    <ul>
+        @foreach (var number in availableNumbers)
+        {
+            <li>@number</li>
+        }
+    </ul>
+</div>
+
+<div id=drawnnumber>
+    <p>
+        Drawn numbers:
+    </p>
+    <ul>
+        @foreach (var number in drawnNumbers)
+        {
+            <li>@number</li>
+        }
+    </ul>
+</div>
+<button @onclick=DrawNumber>Draw a number</button>
+<div> 
+    <h2> Last number: @LastDrawnNumber</h2>
+</div>
+@code {
+    List<int> availableNumbers = new List<int>{1,2,3,4};
+    
+    List<int> drawnNumbers = new List<int>();
+
+    int? LastDrawnNumber;
+
+    private void DrawNumber() {
+        if (availableNumbers.Count == 0)
+            return;
+
+        Random r = new Random();
+        var drawnNumber = availableNumbers.OrderBy(n => r.Next()).First();
+
+        drawnNumbers.Add(drawnNumber);
+        availableNumbers.Remove(drawnNumber);
+        LastDrawnNumber = drawnNumber;
+    }
+}
