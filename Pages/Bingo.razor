@@ -1,12 +1,16 @@
 @page "/bingo"
 
+@using PictureBingo.Data
+
+@inject BingoService BingoService
+
 <h1>Bingoooo!</h1> 
 <div id=numbers>
     Available numbers:
     <ul>
         @foreach (var number in availableNumbers)
         {
-            <li>@number</li>
+            <li>@number.Name</li>
         }
     </ul>
 </div>
@@ -18,20 +22,25 @@
     <ul>
         @foreach (var number in drawnNumbers)
         {
-            <li>@number</li>
+            <li>@number.Name</li>
         }
     </ul>
 </div>
 <button @onclick=DrawNumber>Draw a number</button>
 <div> 
-    <h2> Last number: @LastDrawnNumber</h2>
+    <h2> Last number: @LastDrawnNumber?.Name</h2>
 </div>
 @code {
-    List<int> availableNumbers = new List<int>{1,2,3,4};
+    List<BingoData> availableNumbers;// = new List<int>{1,2,3,4};
     
-    List<int> drawnNumbers = new List<int>();
+    List<BingoData> drawnNumbers = new List<BingoData>();
 
-    int? LastDrawnNumber;
+    BingoData LastDrawnNumber;
+
+    protected override async Task OnInitializedAsync()
+    {
+        availableNumbers = await BingoService.GetBingoData();
+    }
 
     private void DrawNumber() {
         if (availableNumbers.Count == 0)
