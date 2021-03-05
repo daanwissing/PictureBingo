@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.IO;
 
 
 namespace PictureBingo
@@ -16,12 +17,17 @@ namespace PictureBingo
 
         public Task<List<BingoData>> GetBingoData()
         {
-            var result = new List<BingoData>
+            var dir = "C:/Users/daanw/src/PictureBingo/wwwroot/pics";
+
+            var result = new List<BingoData>();
+            foreach(var file in Directory.EnumerateFiles(dir))
             {
-                new BingoData {Name="Chase"},
-                new BingoData{Name="Marshall"},
-                new BingoData{Name="Ryder"}
-            };
+                result.Add(new BingoData
+                {
+                    Name = Path.GetFileName(file),
+                    Path = $"pics/{Path.GetFileName(file)}"
+                });
+            }
             return Task.FromResult(result);
         }
 

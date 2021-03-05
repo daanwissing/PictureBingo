@@ -8,7 +8,7 @@
 <div id=numbers>
     Available numbers:
     <ul>
-        @foreach (var number in availableNumbers)
+        @foreach (var number in drawnNumbers)
         {
             <li>@number.Name</li>
         }
@@ -22,16 +22,16 @@
     <ul>
         @foreach (var number in drawnNumbers)
         {
-            <li>@number.Name</li>
+            <img src=@number.Path style="height:100%" />
         }
     </ul>
 </div>
 <button @onclick=DrawNumber>Draw a number</button>
 <div> 
-    <h2> Last number: @LastDrawnNumber?.Name</h2>
+    @* <h2> Last number: <img src=@LastDrawnNumber.Path style="height:100%" /></h2> *@
 </div>
 @code {
-    List<BingoData> availableNumbers;// = new List<int>{1,2,3,4};
+    List<BingoData> availableNumbers;
     
     List<BingoData> drawnNumbers = new List<BingoData>();
 
