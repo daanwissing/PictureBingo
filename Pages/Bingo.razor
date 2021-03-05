@@ -5,16 +5,20 @@
 @inject BingoService BingoService
 
 <h1>Bingoooo!</h1> 
+<div> 
+    <p> Last number: <img src=@LastDrawnNumber?.Path style="height:100px" /></p>
+</div>
 <div id=numbers>
     Available numbers:
     <ul>
-        @foreach (var number in drawnNumbers)
+        @foreach (var number in availableNumbers)
         {
             <li>@number.Name</li>
         }
     </ul>
 </div>
 
+<button @onclick=DrawNumber>Draw a number</button>
 <div id=drawnnumber>
     <p>
         Drawn numbers:
@@ -22,13 +26,9 @@
     <ul>
         @foreach (var number in drawnNumbers)
         {
-            <img src=@number.Path style="height:100%" />
+            <li style="list-style-type:none"><img src=@number.Path style="height:100px" /></li>
         }
     </ul>
-</div>
-<button @onclick=DrawNumber>Draw a number</button>
-<div> 
-    @* <h2> Last number: <img src=@LastDrawnNumber.Path style="height:100%" /></h2> *@
 </div>
 @code {
     List<BingoData> availableNumbers;
