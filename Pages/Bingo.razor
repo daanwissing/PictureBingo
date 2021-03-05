@@ -6,7 +6,9 @@
 
 <h1>Bingoooo!</h1> 
 <div> 
-    <p> Last number: <img src=@LastDrawnNumber?.Path style="height:100px" /></p>
+    <p>Laatste plaatje: 
+        <img src=@LastDrawnNumber?.Path style="height:100px" />
+    </p>
 </div>
 <div id=numbers>
     Available numbers:
@@ -26,10 +28,11 @@
     <ul>
         @foreach (var number in drawnNumbers)
         {
-            <li style="list-style-type:none"><img src=@number.Path style="height:100px" /></li>
+            <li style="list-style-type:none"><img src=@number.Path style="height:100px; width:100px; object-fit:cover;" /></li>
         }
     </ul>
 </div>
+
 @code {
     List<BingoData> availableNumbers;
     
