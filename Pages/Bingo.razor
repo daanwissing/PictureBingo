@@ -7,9 +7,10 @@
 <h1>Bingoooo!</h1> 
 <div> 
     <p>Laatste plaatje: 
-        <img src=@LastDrawnNumber?.Path style="height:100px" />
+        <img src=@LastDrawnNumber?.Path class="paw-patrol" />
     </p>
 </div>
+<button @onclick=DrawNumber>Draw a number</button>
 <div id=numbers>
     Available numbers:
     <ul>
@@ -20,7 +21,6 @@
     </ul>
 </div>
 
-<button @onclick=DrawNumber>Draw a number</button>
 <div id=drawnnumber>
     <p>
         Drawn numbers:
@@ -28,7 +28,7 @@
     <ul>
         @foreach (var number in drawnNumbers)
         {
-            <li style="list-style-type:none"><img src=@number.Path style="height:100px; width:100px; object-fit:cover;" /></li>
+            <li style="list-style-type:none"><img src=@number.Path class="paw-patrol" /></li>
         }
     </ul>
 </div>
