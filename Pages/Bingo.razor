@@ -6,13 +6,15 @@
 
 <h1>Bingoooo!</h1> 
 <div> 
-    <p>Laatste plaatje: 
-        <img src=@LastDrawnNumber?.Path class="paw-patrol" />
-    </p>
+    <h2>Laatste plaatje:</h2>
+     <br/>
+        @if(LastDrawnNumber != null){
+            <img src=@LastDrawnNumber?.Path class="paw-patrol" />
+        }
 </div>
-<button @onclick=DrawNumber>Draw a number</button>
+<button @onclick=DrawNumber>Trek een plaatje</button>
 <div id=numbers>
-    Available numbers:
+    Beschikbaar:
     <ul>
         @foreach (var number in availableNumbers)
         {
@@ -23,7 +25,7 @@
 
 <div id=drawnnumber>
     <p>
-        Drawn numbers:
+        Getrokken :
     </p>
     <ul>
         @foreach (var number in drawnNumbers)
