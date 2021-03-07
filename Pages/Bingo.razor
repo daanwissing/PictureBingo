@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row">
         <div class="col-9">
-            <button class="btn btn-primary" @onclick=DrawNumber>Trek een plaatje</button>
+            <button class="btn btn-primary" disabled=@NoDraw @onclick=DrawNumber>Trek een plaatje</button>
             <div>
                 <h2>Laatste plaatje: @LastDrawnNumber?.Name</h2>
                 <br />
@@ -41,11 +41,15 @@
     </div>
 </div>
 @code {
+    private bool NoDraw => !CanDraw;
+
     List<BingoData> availableNumbers;
 
     IEnumerable<BingoData> drawnNumbers = new List<BingoData>();
 
     BingoData LastDrawnNumber;
+
+    private bool CanDraw => availableNumbers.Count != 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,7 +58,7 @@
 
     private void DrawNumber()
     {
-        if (availableNumbers.Count == 0)
+        if (!CanDraw)
             return;
 
         Random r = new Random();
