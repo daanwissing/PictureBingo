@@ -14,7 +14,7 @@
                 <br />
                 @if (LastDrawnNumber != null)
                 {
-                    <img src=@LastDrawnNumber?.Path class="paw-patrol big" />
+                    <img src=@LastDrawnNumber?.Path class="paw-patrol big @AnimateClass" />
                 }
             </div>
         </div>
@@ -51,12 +51,14 @@
 
     private bool CanDraw => availableNumbers.Count != 0;
 
+    private string AnimateClass = "";
+
     protected override async Task OnInitializedAsync()
     {
         availableNumbers = await BingoService.GetBingoData();
     }
 
-    private void DrawNumber()
+    private async Task DrawNumber()
     {
         if (!CanDraw)
             return;
@@ -67,5 +69,10 @@
         drawnNumbers = drawnNumbers.Prepend(drawnNumber);
         availableNumbers.Remove(drawnNumber);
         LastDrawnNumber = drawnNumber;
+        AnimateClass = "paw-patrol-incoming";
+        await Task.Run(() => {
+            System.Threading.Thread.Sleep(1000);
+            AnimateClass = "";
+        });
     }
 }
