@@ -4,41 +4,46 @@
 
 @inject BingoService BingoService
 
-<h1>Bingoooo!</h1> 
-<button class="btn btn-primary" @onclick=DrawNumber>Trek een plaatje</button>
-<div> 
-    <h2>Laatste plaatje: @LastDrawnNumber?.Name</h2>
-     <br/>
-        @if(LastDrawnNumber != null){
-            <img src=@LastDrawnNumber?.Path class="paw-patrol big" />
-        }
+<h1>Bingoooo!</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <button class="btn btn-primary" @onclick=DrawNumber>Trek een plaatje</button>
+            <div>
+                <h2>Laatste plaatje: @LastDrawnNumber?.Name</h2>
+                <br />
+                @if (LastDrawnNumber != null)
+                {
+                    <img src=@LastDrawnNumber?.Path class="paw-patrol big" />
+                }
+            </div>
+        </div>
+        <div class="col">
+            <div id=drawnnumber>
+                <p>
+                    Getrokken :
+                </p>
+                <ul>
+                    @foreach (var number in drawnNumbers)
+                    {
+                        <li style="list-style-type:none"><img src=@number.Path class="paw-patrol" /></li>
+                    }
+                </ul>
+            </div>
+            Beschikbaar:
+            <ul>
+                @foreach (var number in availableNumbers)
+                {
+                    <li>@number.Name</li>
+                }
+            </ul>
+        </div>
+    </div>
 </div>
-<div id=drawnnumber>
-    <p>
-        Getrokken :
-    </p>
-    <ul>
-        @foreach (var number in drawnNumbers)
-        {
-            <li style="list-style-type:none"><img src=@number.Path class="paw-patrol" /></li>
-        }
-    </ul>
-</div>
-
-<div id=numbers>
-    Beschikbaar:
-    <ul>
-        @foreach (var number in availableNumbers)
-        {
-            <li>@number.Name</li>
-        }
-    </ul>
-</div>
-
 @code {
     List<BingoData> availableNumbers;
-    
-    List<BingoData> drawnNumbers = new List<BingoData>();
+
+    IEnumerable<BingoData> drawnNumbers = new List<BingoData>();
 
     BingoData LastDrawnNumber;
 
@@ -47,14 +52,15 @@
         availableNumbers = await BingoService.GetBingoData();
     }
 
-    private void DrawNumber() {
+    private void DrawNumber()
+    {
         if (availableNumbers.Count == 0)
             return;
 
         Random r = new Random();
         var drawnNumber = availableNumbers.OrderBy(n => r.Next()).First();
 
-        drawnNumbers.Add(drawnNumber);
+        drawnNumbers = drawnNumbers.Prepend(drawnNumber);
         availableNumbers.Remove(drawnNumber);
         LastDrawnNumber = drawnNumber;
     }
