@@ -50,7 +50,16 @@ a, .btn-link {
     }
 
 .paw-patrol {
-    height:100px; 
-    width:100px; 
+    height:200ps; 
+    width:200px; 
     object-fit:cover;
+}
+
+.big {
+    height: 300px;
+    width: 300px;
+}
+
+.paw-patrol-incoming{
+    transform: scale(0.5);
 }

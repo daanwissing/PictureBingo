@@ -5,24 +5,14 @@
 @inject BingoService BingoService
 
 <h1>Bingoooo!</h1> 
+<button class="btn btn-primary" @onclick=DrawNumber>Trek een plaatje</button>
 <div> 
-    <h2>Laatste plaatje:</h2>
+    <h2>Laatste plaatje: @LastDrawnNumber?.Name</h2>
      <br/>
         @if(LastDrawnNumber != null){
-            <img src=@LastDrawnNumber?.Path class="paw-patrol" />
+            <img src=@LastDrawnNumber?.Path class="paw-patrol big" />
         }
 </div>
-<button @onclick=DrawNumber>Trek een plaatje</button>
-<div id=numbers>
-    Beschikbaar:
-    <ul>
-        @foreach (var number in availableNumbers)
-        {
-            <li>@number.Name</li>
-        }
-    </ul>
-</div>
-
 <div id=drawnnumber>
     <p>
         Getrokken :
@@ -31,6 +21,16 @@
         @foreach (var number in drawnNumbers)
         {
             <li style="list-style-type:none"><img src=@number.Path class="paw-patrol" /></li>
+        }
+    </ul>
+</div>
+
+<div id=numbers>
+    Beschikbaar:
+    <ul>
+        @foreach (var number in availableNumbers)
+        {
+            <li>@number.Name</li>
         }
     </ul>
 </div>

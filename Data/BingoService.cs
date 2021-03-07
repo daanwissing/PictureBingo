@@ -24,7 +24,7 @@ namespace PictureBingo
             {
                 result.Add(new BingoData
                 {
-                    Name = Path.GetFileName(file),
+                    Name = Path.GetFileNameWithoutExtension(file),
                     Path = $"pics/{Path.GetFileName(file)}"
                 });
             }
