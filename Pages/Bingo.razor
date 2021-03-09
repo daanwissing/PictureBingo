@@ -8,14 +8,14 @@
     <div class="row">
         <div class="col-9">
             <br />
-            @if (LastDrawnNumber != null)
+            @if (LastDrawnPicture != null)
             {
-                <img src=@LastDrawnNumber?.Path class="paw-patrol big @AnimateClass" />
+                <h2>Laatste plaatje: @CurrentPicture?.Name</h2>
+                <img src=@LastDrawnPicture?.Path class="paw-patrol big @AnimateClass" />
             }
         </div>
         <div class="col">
             <button class="btn btn-primary" disabled=@NoDraw @onclick=DrawNumber>Trek een plaatje</button>
-            <h2>Laatste plaatje: @LastDrawnNumber?.Name</h2>
             <p>
                 Getrokken :
             </p>
@@ -42,7 +42,9 @@
 
     IEnumerable<BingoData> drawnNumbers = new List<BingoData>();
 
-    BingoData LastDrawnNumber;
+    BingoData CurrentPicture;
+
+    BingoData LastDrawnPicture;
 
     private bool CanDraw => availableNumbers.Count != 0;
 
@@ -61,9 +63,8 @@
         Random r = new Random();
         var drawnNumber = availableNumbers.OrderBy(n => r.Next()).First();
 
-        drawnNumbers = drawnNumbers.Prepend(drawnNumber);
         availableNumbers.Remove(drawnNumber);
-        LastDrawnNumber = drawnNumber;
+        LastDrawnPicture = drawnNumber;
         AnimateClass = "paw-patrol-incoming";
         await ResetAnimation(5_000);
     }
@@ -74,6 +75,8 @@
             {
             System.Threading.Thread.Sleep(ms);
             AnimateClass = "";
+            CurrentPicture = LastDrawnPicture;
+            drawnNumbers = drawnNumbers.Prepend(CurrentPicture);
         });
     }
 }
