@@ -50,14 +50,13 @@ a, .btn-link {
     }
 
 .paw-patrol {
-    /* height:200ps;  */
-    width:200px; 
-    /* object-fit:cover; */
+    max-height: 10rem;
+    max-width: 10rem; 
 }
 
 .big {
-    /* height: 300px; */
-    width: 500px;
+    max-height: 30rem;
+    max-width: 30rem;
 }
 
 .paw-patrol-incoming{
