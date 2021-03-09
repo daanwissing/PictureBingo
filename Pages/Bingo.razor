@@ -4,32 +4,27 @@
 
 @inject BingoService BingoService
 
-<h1>Bingoooo!</h1>
 <div class="container">
     <div class="row">
         <div class="col-9">
-            <button class="btn btn-primary" disabled=@NoDraw @onclick=DrawNumber>Trek een plaatje</button>
-            <div>
-                <h2>Laatste plaatje: @LastDrawnNumber?.Name</h2>
-                <br />
-                @if (LastDrawnNumber != null)
-                {
-                    <img src=@LastDrawnNumber?.Path class="paw-patrol big @AnimateClass" />
-                }
-            </div>
+            <br />
+            @if (LastDrawnNumber != null)
+            {
+                <img src=@LastDrawnNumber?.Path class="paw-patrol big @AnimateClass" />
+            }
         </div>
         <div class="col">
-            <div id=drawnnumber>
-                <p>
-                    Getrokken :
-                </p>
-                <ul>
-                    @foreach (var number in drawnNumbers)
-                    {
-                        <li style="list-style-type:none"><img src=@number.Path class="paw-patrol" /></li>
-                    }
-                </ul>
-            </div>
+            <button class="btn btn-primary" disabled=@NoDraw @onclick=DrawNumber>Trek een plaatje</button>
+            <h2>Laatste plaatje: @LastDrawnNumber?.Name</h2>
+            <p>
+                Getrokken :
+            </p>
+            <ul>
+                @foreach (var number in drawnNumbers)
+                {
+                    <li style="list-style-type:none"><img src=@number.Path class="paw-patrol" /></li>
+                }
+            </ul>
             Beschikbaar:
             <ul>
                 @foreach (var number in availableNumbers)
@@ -70,8 +65,14 @@
         availableNumbers.Remove(drawnNumber);
         LastDrawnNumber = drawnNumber;
         AnimateClass = "paw-patrol-incoming";
-        await Task.Run(() => {
-            System.Threading.Thread.Sleep(1000);
+        await ResetAnimation(5_000);
+    }
+
+    private Task ResetAnimation(int ms)
+    {
+        return Task.Run(() =>
+            {
+            System.Threading.Thread.Sleep(ms);
             AnimateClass = "";
         });
     }
