@@ -70,7 +70,7 @@ a, .btn-link {
 @keyframes intro {
     0% {
         transform: scale(0.25);
-        filter: blur(4rem);
+        filter: blur(10rem) grayscale(1);
     }
     100% {
         transform: scale(1) rotate(3600deg);
