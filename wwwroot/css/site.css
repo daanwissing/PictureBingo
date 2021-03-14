@@ -75,3 +75,9 @@ a, .btn-link {
         transform: scale(1) rotate(3600deg);
     }
 }
+
+.btn-nextbingo {
+    font-size: xx-large;
+    height: 5rem;
+    width: 100%;
+}

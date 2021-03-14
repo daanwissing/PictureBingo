@@ -6,18 +6,20 @@
 
 <div class="container">
     <div class="row">
+        <button class="btn btn-primary btn-nextbingo" disabled=@NoDraw @onclick=DrawNumber>Trek een plaatje</button>
+    </div>
+    <div class="row">
         <div class="col-9">
             <br />
             @if (LastDrawnPicture != null)
             {
-                <h2>Laatste plaatje: @CurrentPicture?.Name</h2>
+                <h2>Getrokken plaatje: @CurrentPicture?.Name</h2>
                 <img src=@LastDrawnPicture?.Path class="paw-patrol big @AnimateClass" />
             }
         </div>
         <div class="col">
-            <button class="btn btn-primary" disabled=@NoDraw @onclick=DrawNumber>Trek een plaatje</button>
             <p>
-                Getrokken :
+                Getrokken (@drawnNumbers.Count) :
             </p>
             <ul>
                 @foreach (var number in drawnNumbers)
@@ -25,7 +27,7 @@
                     <li style="list-style-type:none"><img src=@number.Path class="paw-patrol" /></li>
                 }
             </ul>
-            Beschikbaar:
+            Beschikbaar (@availableNumbers.Count):
             <ul>
                 @foreach (var number in availableNumbers)
                 {
@@ -40,7 +42,7 @@
 
     List<BingoData> availableNumbers;
 
-    IEnumerable<BingoData> drawnNumbers = new List<BingoData>();
+    List<BingoData> drawnNumbers = new List<BingoData>();
 
     BingoData CurrentPicture;
 
@@ -76,7 +78,7 @@
             System.Threading.Thread.Sleep(ms);
             AnimateClass = "";
             CurrentPicture = LastDrawnPicture;
-            drawnNumbers = drawnNumbers.Prepend(CurrentPicture);
+            drawnNumbers = drawnNumbers.Prepend(CurrentPicture).ToList();
         });
     }
 }
