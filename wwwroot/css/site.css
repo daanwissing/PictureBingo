@@ -52,6 +52,8 @@ a, .btn-link {
 .paw-patrol {
     max-height: 10rem;
     max-width: 10rem; 
+    display: block;
+    margin: 0 auto
 }
 
 .big {
