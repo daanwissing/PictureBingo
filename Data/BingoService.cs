@@ -17,7 +17,7 @@ namespace PictureBingo
 
         public Task<List<BingoData>> GetBingoData()
         {
-            var dir = "C:/Users/daanw/src/PictureBingo/wwwroot/pics";
+            var dir = "wwwroot/pics";
 
             var result = new List<BingoData>();
             foreach(var file in Directory.EnumerateFiles(dir))

@@ -59,6 +59,7 @@ a, .btn-link {
 .big {
     max-height: 30rem;
     max-width: 30rem;
+    vertical-align: middle;
 }
 
 .paw-patrol-incoming{

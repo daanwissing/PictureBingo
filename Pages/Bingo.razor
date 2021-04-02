@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row">
-        <button class="btn btn-primary btn-nextbingo" disabled=@NoDraw @onclick=DrawNumber>Trek een plaatje</button>
+        <button class="btn btn-primary btn-nextbingo" disabled=@NoDraw @onclick=DrawNumber>@DrawText</button>
     </div>
     <div class="row">
         <div class="col-9">
@@ -37,7 +37,12 @@
     </div>
 </div>
 @code {
-    private bool NoDraw => !CanDraw;
+    private const string WachtText = "Even wachten...";
+    private const string TrekText = "Trek een nieuw plaatje";
+
+    private bool NoDraw = true;
+
+    private string DrawText = WachtText;
 
     List<BingoData> availableNumbers;
 
@@ -54,6 +59,8 @@
     protected override async Task OnInitializedAsync()
     {
         availableNumbers = await BingoService.GetBingoData();
+        DrawText = TrekText;
+        NoDraw = !CanDraw;
     }
 
     private async Task DrawNumber()
@@ -67,6 +74,8 @@
         availableNumbers.Remove(drawnNumber);
         LastDrawnPicture = drawnNumber;
         AnimateClass = "paw-patrol-incoming";
+        NoDraw = true;
+        DrawText = WachtText;
         await ResetAnimation(5_000);
     }
 
@@ -78,6 +87,8 @@
             AnimateClass = "";
             CurrentPicture = LastDrawnPicture;
             drawnNumbers = drawnNumbers.Prepend(CurrentPicture).ToList();
+            NoDraw = !CanDraw;
+            DrawText = TrekText;
         });
     }
 }
