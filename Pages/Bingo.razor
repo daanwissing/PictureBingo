@@ -6,6 +6,16 @@
 
 <div class="container">
     <div class="row">
+        <label for="bingoOption">Kies een thema</label>
+        <select id="bingoOption" @onchange="OnOptionChanged">
+            <option>...</option>
+            @foreach (var option in availableOptions)
+            {
+                <option value="@option">@option</option>
+            }
+        </select>
+    </div>
+    <div class="row">
         <button class="btn btn-primary btn-nextbingo" disabled=@NoDraw @onclick=DrawNumber>@DrawText</button>
     </div>
     <div class="row">
@@ -36,59 +46,3 @@
         </div>
     </div>
 </div>
-@code {
-    private const string WachtText = "Even wachten...";
-    private const string TrekText = "Trek een nieuw plaatje";
-
-    private bool NoDraw = true;
-
-    private string DrawText = WachtText;
-
-    List<BingoData> availableNumbers;
-
-    List<BingoData> drawnNumbers = new List<BingoData>();
-
-    BingoData CurrentPicture;
-
-    BingoData LastDrawnPicture;
-
-    private bool CanDraw => availableNumbers.Count != 0;
-
-    private string AnimateClass = "";
-
-    protected override async Task OnInitializedAsync()
-    {
-        availableNumbers = await BingoService.GetBingoData();
-        DrawText = TrekText;
-        NoDraw = !CanDraw;
-    }
-
-    private async Task DrawNumber()
-    {
-        if (!CanDraw)
-            return;
-
-        Random r = new Random();
-        var drawnNumber = availableNumbers.OrderBy(n => r.Next()).First();
-
-        availableNumbers.Remove(drawnNumber);
-        LastDrawnPicture = drawnNumber;
-        AnimateClass = "paw-patrol-incoming";
-        NoDraw = true;
-        DrawText = WachtText;
-        await ResetAnimation(5_000);
-    }
-
-    private Task ResetAnimation(int ms)
-    {
-        return Task.Run(() =>
-            {
-            System.Threading.Thread.Sleep(ms);
-            AnimateClass = "";
-            CurrentPicture = LastDrawnPicture;
-            drawnNumbers = drawnNumbers.Prepend(CurrentPicture).ToList();
-            NoDraw = !CanDraw;
-            DrawText = TrekText;
-        });
-    }
-}
